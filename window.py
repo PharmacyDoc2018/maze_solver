@@ -3,11 +3,11 @@ from tkinter import Tk, BOTH, Canvas
 class Window():
     def __init__(self, width, height,):
         self.root = Tk()
-        self.root.title = "Maze Solver"
+        self.root.title("Maze Solver")
         self.root.winfo_x = width
         self.root.winfo_y = height
 
-        self.canvas = Canvas(self.root)
+        self.canvas = Canvas(self.root, width=self.root.winfo_x, height=self.root.winfo_y)
         self.canvas.pack()
 
         self.is_running = False
@@ -25,3 +25,6 @@ class Window():
 
     def close(self):
         self.is_running = False
+
+    def draw_line(self, line, fill_color):
+        line.draw(self.canvas, fill_color)
