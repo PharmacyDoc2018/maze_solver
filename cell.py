@@ -2,7 +2,7 @@ from line import *
 from point import *
 
 class Cell:
-    def __init__(self, p1, p2, win, left_wall=False, right_wall=False, top_wall=False, bottom_wall=False):
+    def __init__(self, p1, p2, win, has_left_wall=False, has_right_wall=False, has_top_wall=False, has_bottom_wall=False):
         self.p1 = p1
         self.x1 = p1.x
         self.y1 = p1.y
@@ -13,10 +13,10 @@ class Cell:
 
         self.win = win
 
-        self.has_left_wall = left_wall
-        self.has_right_wall = right_wall
-        self.has_top_wall = top_wall
-        self.has_bottom_wall = bottom_wall
+        self.has_left_wall = has_left_wall
+        self.has_right_wall = has_right_wall
+        self.has_top_wall = has_top_wall
+        self.has_bottom_wall = has_bottom_wall
 
     def draw(self):
         top = Line(self.p1, Point(self.x2, self.y1))
@@ -25,4 +25,13 @@ class Cell:
         right = Line(Point(self.x2, self.y1),self.p2)
 
         if self.has_left_wall == True:
+            left.draw(self.win.canvas,"red")
+
+        if self.has_right_wall == True:
+            right.draw(self.win.canvas,"red")
+
+        if self.has_top_wall == True:
             top.draw(self.win.canvas,"red")
+
+        if self.has_bottom_wall == True:
+            bottom.draw(self.win.canvas,"red")
