@@ -11,6 +11,8 @@ class Cell:
         self.x2 = p2.x
         self.y2 = p2.y
 
+        self.center = Point((self.x2 + self.x1)/2, (self.y2 + self.y1)/2)
+
         self.win = win
 
         self.has_left_wall = has_left_wall
@@ -35,3 +37,12 @@ class Cell:
 
         if self.has_bottom_wall == True:
             bottom.draw(self.win.canvas,"red")
+
+    def draw_move(self, to_cell, undo=False):
+        if undo == False:
+            fill_color = "red"
+        else:
+            fill_color = "gray"
+        
+        move_line = Line(self.center, to_cell.center)
+        move_line.draw(self.win.canvas, fill_color)
