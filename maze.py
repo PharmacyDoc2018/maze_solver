@@ -23,12 +23,14 @@ class Maze:
                 point_1 = Point(self.x1 + (self.cell_size_x * i), self.y1 + (self.cell_size_y * j))
                 point_2 = Point(self.x1 + (self.cell_size_x * (i+1)), self.y1 + (self.cell_size_y * (j+1)))
                 self.cells[i].append(Cell(point_1, point_2, self.win, True, True, True, True))
-                if self.win is not None:
-                    self.draw_cell(self.cells[i][j])
+                self.draw_cell(self.cells[i][j])
+        
+        self.break_entrance_and_exit_walls()
 
     def draw_cell(self, cell):
-        cell.draw()
-        self.animate()
+        if self.win is not None:
+            cell.draw()
+            self.animate()
 
     def animate(self):
         self.win.redraw()
@@ -36,9 +38,7 @@ class Maze:
 
     def break_entrance_and_exit_walls(self):
         self.cells[0][0].has_left_wall = False
-        if self.win is not None:
-            self.cells[0][0].draw()
+        self.draw_cell(self.cells[0][0])
 
         self.cells[-1][-1].has_right_wall = False
-        if self.win is not None:
-            self.cells[-1][-1].draw() 
+        self.draw_cell(self.cells[-1][-1]) 
