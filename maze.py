@@ -3,7 +3,7 @@ from cell import *
 from point import *
 
 class Maze:
-    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win):
+    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None):
         self.x1 = x1
         self.y1 = y1
         self.num_rows = num_rows
@@ -23,7 +23,8 @@ class Maze:
                 point_1 = Point(self.x1 + (self.cell_size_x * i), self.y1 + (self.cell_size_y * j))
                 point_2 = Point(self.x1 + (self.cell_size_x * (i+1)), self.y1 + (self.cell_size_y * (j+1)))
                 self.cells[i].append(Cell(point_1, point_2, self.win, True, True, True, True))
-                self.draw_cell(self.cells[i][j])
+                if self.win is not None:
+                    self.draw_cell(self.cells[i][j])
 
     def draw_cell(self, cell):
         cell.draw()
