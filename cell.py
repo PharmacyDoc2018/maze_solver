@@ -28,15 +28,23 @@ class Cell:
 
         if self.has_left_wall == True:
             left.draw(self.win.canvas,"red")
+        else:
+            left.draw(self.win.canvas,"#d9d9d9")
 
         if self.has_right_wall == True:
             right.draw(self.win.canvas,"red")
+        else:
+            right.draw(self.win.canvas,"#d9d9d9")
 
         if self.has_top_wall == True:
             top.draw(self.win.canvas,"red")
+        else:
+            top.draw(self.win.canvas,"#d9d9d9")
 
         if self.has_bottom_wall == True:
             bottom.draw(self.win.canvas,"red")
+        else:
+            bottom.draw(self.win.canvas,"#d9d9d9")
 
     def draw_move(self, to_cell, undo=False):
         if undo == False:
