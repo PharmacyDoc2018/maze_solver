@@ -1,9 +1,11 @@
 import time
+import random
+
 from cell import *
 from point import *
 
 class Maze:
-    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None):
+    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None, seed=None):
         self.x1 = x1
         self.y1 = y1
         self.num_rows = num_rows
@@ -11,6 +13,9 @@ class Maze:
         self.cell_size_x = cell_size_x
         self.cell_size_y = cell_size_y
         self.win = win
+
+        if seed is not None:
+            random.seed(seed)
 
         self.create_cells()
 
@@ -26,6 +31,7 @@ class Maze:
                 self.draw_cell(self.cells[i][j])
         
         self.break_entrance_and_exit_walls()
+        self.break_walls_r(0, 0)
 
     def draw_cell(self, cell):
         if self.win is not None:
@@ -42,3 +48,72 @@ class Maze:
 
         self.cells[-1][-1].has_right_wall = False
         self.draw_cell(self.cells[-1][-1]) 
+
+    def break_walls_r(self, i, j):
+        def can_go_up(i, j):
+            if (j-1 >= 0) and (self.cells[i][j-1].visited == False):
+                return True
+            else:
+                return False
+
+        def can_go_down(i, j):
+            if (j <= self.num_rows-2) and (self.cells[i][j+1].visited == False):
+                return True
+            else:
+                return False
+            
+        def can_go_left(i, j):
+            if (i-1 >= 0) and (self.cells[i-1][j].visited == False):
+                return True
+            else:
+                return False
+            
+        def can_go_right(i, j):
+            if (i <= self.num_cols-2) and (self.cells[i+1][j].visited == False):
+                return True
+            else:
+                return False
+          
+        self.cells[i][j].visited = True
+        while True:
+            to_visit = []
+            if can_go_up(i, j) == True:
+                to_visit.append([i, j-1, "up"])
+            if can_go_down(i, j) == True:
+                to_visit.append([i, j+1, "down"])
+            if can_go_left(i, j) == True:
+                to_visit.append([i-1, j, "left"])
+            if can_go_right(i, j) == True:
+                to_visit.append([i+1, j, "right"])
+
+            if to_visit == []:
+                self.draw_cell(self.cells[i][j])
+                return
+            
+            rand_cell = random.choice(to_visit)
+            if rand_cell[2] == "up":
+                self.cells[i][j].has_top_wall = False
+                self.draw_cell(self.cells[i][j])
+                self.cells[i][j-1].has_bottom_wall = False
+                self.draw_cell(self.cells[i][j-1])
+
+            elif rand_cell[2] == "down":
+                self.cells[i][j].has_bottom_wall = False
+                self.draw_cell(self.cells[i][j])
+                self.cells[i][j+1].has_top_wall = False
+                self.draw_cell(self.cells[i][j+1])
+
+            elif rand_cell[2] == "left":
+                self.cells[i][j].has_left_wall = False
+                self.draw_cell(self.cells[i][j])
+                self.cells[i-1][j].has_right_wall = False
+                self.draw_cell(self.cells[i-1][j])
+
+            elif rand_cell[2] == "right":
+                self.cells[i][j].has_right_wall = False
+                self.draw_cell(self.cells[i][j])
+                self.cells[i+1][j].has_left_wall = False
+                self.draw_cell(self.cells[i+1][j])
+
+            self.break_walls_r(rand_cell[0], rand_cell[1])
+                
