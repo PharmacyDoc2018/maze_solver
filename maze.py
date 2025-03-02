@@ -18,7 +18,10 @@ class Maze:
             random.seed(seed)
 
         self.create_cells()
-
+        self.break_entrance_and_exit_walls()
+        self.break_walls_r(0, 0)
+        self.reset_cells_visited()
+        
     def create_cells(self):
         self.cells = []
 
@@ -30,9 +33,6 @@ class Maze:
                 self.cells[i].append(Cell(point_1, point_2, self.win, True, True, True, True))
                 self.draw_cell(self.cells[i][j])
         
-        self.break_entrance_and_exit_walls()
-        self.break_walls_r(0, 0)
-
     def draw_cell(self, cell):
         if self.win is not None:
             cell.draw()
@@ -117,3 +117,7 @@ class Maze:
 
             self.break_walls_r(rand_cell[0], rand_cell[1])
                 
+    def reset_cells_visited(self):
+        for i in range(0, self.num_cols):
+            for j in range(0, self.num_rows):
+                self.cells[i][j].visited = False
