@@ -162,4 +162,6 @@ class Maze:
             if self.solve_r(i-1, j) == True:
                 return True
             else:
-                self.cells[i][j].draw_move(self.cells[i-1][j])
+                self.cells[i][j].draw_move(self.cells[i-1][j], True)
+            
+        return False
