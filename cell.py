@@ -50,7 +50,7 @@ class Cell:
 
     def draw_move(self, to_cell, undo=False):
         if undo == False:
-            fill_color = "red"
+            fill_color = "black"
         else:
             fill_color = "gray"
         
